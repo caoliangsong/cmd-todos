@@ -1,0 +1,38 @@
+var main = require('../src/index')
+var process = require('process')
+var argv = process.argv
+var argv2 = argv[2]
+var colors= require('colors')
+
+// get data
+
+if(argv2 && argv2.toLowerCase() === 'get'){
+    var n = argv[3]
+    if(n === undefined){
+         main.get()
+    }else{
+        main.get(n)
+    }
+}else if(argv2 && (argv2.toLowerCase() === 'done' ||argv2.toLowerCase() === 'undone' )){
+    var n = parseInt(argv[3])
+    if(typeof n !== 'number'){
+        throw new Error('after done must be a number!')
+    }
+    main[argv2.toLowerCase()](n)
+}else if(argv2 && argv2 === 'add'){
+    if(typeof argv[3] === 'undefined'){
+        throw new Error('add content can not be undefined')
+    }
+    main.add(argv[3])
+}else{
+    console.log(`
+        cmd-todo@1.0.0 by seeking
+        ------------------------------------------
+        commands:\n
+            -h -help  show help 
+            get:  show all todos
+            done xxx: modify item id xxx done
+            add xxx: add new item set content xxx
+
+    `.magenta)
+}

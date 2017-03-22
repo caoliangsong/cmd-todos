@@ -1,0 +1,26 @@
+{
+  "name": "cmd-todos",
+  "version": "1.0.0",
+  "description": "a todo list in command line",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "cmd-todo": "./bin/cmd-todo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caoliangsong/cmd-todos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caoliangsong/cmd-todos/issues"
+  },
+  "homepage": "https://github.com/caoliangsong/cmd-todos#readme",
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
+}
