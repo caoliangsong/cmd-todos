@@ -28,7 +28,7 @@ if(argv2 && argv2.toLowerCase() === 'get'){
     main.add(argv[3])
 }else{
     console.log(`
-        cmd-todo@1.0.0 by seeking
+        cmd-todo@1.3.2
         ------------------------------------------
         commands:\n
             -h -help  show help 
