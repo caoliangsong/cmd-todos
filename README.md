@@ -1,21 +1,21 @@
 # cmd-todos
 a todo list in command line 
 
-# install
+# Install
 ```
 npm install cmd-todo -g
 ```
 
-# how to use
+# How to use
 
-## in nodejs
+## Work at nodejs
 
 ```
 var todo = require('cmd-todo')
 todo.get()
 
 ```
-## in command line
+## Work at command line
 
 ```
 cmd-todo get 

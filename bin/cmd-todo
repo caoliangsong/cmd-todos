@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var main = require('../src/index')
 var process = require('process')
 var argv = process.argv
