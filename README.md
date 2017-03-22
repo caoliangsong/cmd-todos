@@ -3,10 +3,19 @@ a todo list in command line
 
 # install
 ```
-npm install cmd-todo
+npm install cmd-todo -g
 ```
 
 # how to use
+
+## in nodejs
+
+```
+var todo = require('cmd-todo')
+todo.get()
+
+```
+## in command line
 
 ```
 cmd-todo get 
