@@ -21,20 +21,24 @@ if(argv2 && argv2.toLowerCase() === 'get'){
         throw new Error('after done must be a number!')
     }
     main[argv2.toLowerCase()](n)
-}else if(argv2 && argv2 === 'add'){
+}else if(argv2 && (argv2 === 'add' || argv2 === 'del') ){
     if(typeof argv[3] === 'undefined'){
         throw new Error('add content can not be undefined')
     }
-    main.add(argv[3])
+    main[argv2.toLowerCase()](argv[3])
+}else if(argv2 && (argv2 === 'clear') ){
+    main[argv2]()
 }else{
     console.log(`
-        cmd-todo@1.3.2
+        cmd-todo@1.3.3
         ------------------------------------------
-        commands:\n
-            -h -help  show help 
-            get:  show all todos
-            done xxx: modify item id xxx done
-            add xxx: add new item set content xxx
-
+        commands:
+            cmd-todo -h -help  show help 
+            cmd-todo get:  show all todos
+            cmd-todo add xxx: add new item set content xxx
+            cmd-todo done xxx: modify item id=xxx done
+            cmd-todo undone xxx: modify item id=xxx undone
+            cmd-todo del xxx: delete item id=xxx
+            cmd-todo clear: delete all todos
     `.magenta)
 }

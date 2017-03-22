@@ -57,8 +57,17 @@ var CmdTodos = {
     undone:function(id){
         this.done(id,false)
     },
-    del:function(){
-
+    del:function(id){
+        var data = this._getData()
+        data.forEach(function(item,index){
+            if(item.id === parseInt(id)) {
+                data.splice(index,1)
+            }
+        })
+        this._setData(data)
+    },
+    clear:function(){
+        this._setData([])
     },
     _getData:function(){
         return JSON.parse(fs.readFileSync(dataUrl,'utf-8'))
