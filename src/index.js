@@ -16,14 +16,13 @@ var CmdTodos = {
             }
         })
         if(status === 'todo' || status === undefined){
-            console.log('todo >>>'.bgGreen)
+            console.log('todo >>>'.grey)
             todoData.forEach(function(item,index){
                 console.log(`${item.id}: ${item.content}(${item.time})`.green)
             })
         }
-         console.log('\n')
         if(status === 'done' || status === undefined){
-            console.log('done >>>'.bgMagenta)
+            console.log('done >>>'.grey)
             doneData.forEach(function(item,index){
                 console.log(`${item.id}: ${item.content}(${item.time})`.gray.underline)
             })
