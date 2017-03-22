@@ -1,5 +1,5 @@
 {
-  "name": "cmd-todos",
+  "name": "cmd-todo",
   "version": "1.0.0",
   "description": "a todo list in command line",
   "main": "index.js",

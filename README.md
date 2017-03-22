@@ -1,6 +1,11 @@
 # cmd-todos
 a todo list in command line 
 
+# install
+```
+npm install cmd-todo
+```
+
 # how to use
 
 ```
