@@ -1,46 +1,108 @@
 #!/usr/bin/env node
+var fs = require('fs');
+var path = require('path');
+var readline = require('readline')
 
 var main = require('../src/index')
+// var main = require('../src/local')
 var argv = process.argv
 var argv2 = argv[2]
-var colors= require('colors')
-var reg = function(str){
-    return new RegExp('^'+ str +'$','ig')
+var colors = require('colors')
+var reg = function (str) {
+    return new RegExp('^' + str + '$', 'ig')
 };
 
-// get data
+var accoutFile = path.resolve(__dirname, '../src/account.json')
 
-if(reg('get').test(argv2)){
+// 欢迎界面
+if (!argv2 || reg('-h').test(argv2) || reg('-help').test(argv2)) {
+    return console.log(`
+    cmd-todo@1.4.0(支持网络账号同步)
+    ------------------------------------------
+    Commands:
+    cmd-todo -h -help  显示帮助
+    cmd-todo get:  显示所有代办任务
+    cmd-todo add xxx: 添加代办
+    cmd-todo done xxx: 完成代办
+    cmd-todo undone xxx: 取消完成
+    cmd-todo del xxx: 删除单个
+    cmd-todo clear: 删除所有数据
+`.magenta)
+}
+
+
+// 判断权限
+var accout = fs.readFileSync(accoutFile, { encoding: 'utf-8' })
+accout = JSON.parse(accout || '{}');
+
+if (!accout.username) {
+
+    console.log('>您是cmd-todo的新用户，请先注册账号。'.red)
+    const r1 = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    })
+
+    r1.question('请输入手机号：', function (answer) {
+        if (!answer) {
+            console.log('手机号不能为空！！')
+            r1.close()
+        }
+
+        // 校验手机号是否重复
+        main.checkRepeatUser(answer).then(res => {
+            // 已经有人注册此手机号
+            if (res > 0) {
+                return r1.close()
+            }
+
+            // 新用户注册
+            r1.question('请输入密码：', function (password) {
+                if (!password) {
+                    console.log('密码不能为空！！')
+                    r1.close()
+                }
+
+                // 完成输入，存入数据库
+                main.registerUser(answer, password).then(res2 => {
+                    if (res2 == 1) {
+                        fs.writeFileSync(accoutFile, JSON.stringify({
+                            username: answer,
+                            password: password
+                        }))
+                        r1.close()
+                    }
+                })
+            })
+        })
+    })
+
+    r1.on('close', function () {
+        process.exit(0);
+    })
+    return
+}
+
+
+// 正式流程
+if (reg('get').test(argv2)) {
     var n = argv[3]
-    if(n === undefined){
-         main.get()
-    }else{
+    if (n === undefined) {
+        main.get()
+    } else {
         main.get(n)
     }
-}else if(reg('done|undone').test(argv2)){
+} else if (reg('done|undone').test(argv2)) {
     var n = parseInt(argv[3])
-    if(typeof n !== 'number'){
+    if (typeof n !== 'number') {
         throw new Error('after done must be a number!')
     }
     main[argv2.toLowerCase()](n)
-}else if(reg('add|del').test(argv2)){
-    if(typeof argv[3] === 'undefined'){
+} else if (reg('add|del').test(argv2)) {
+    if (typeof argv[3] === 'undefined') {
         throw new Error('add content can not be undefined')
     }
     main[argv2.toLowerCase()](argv[3])
-}else if(reg('clear').test(argv2) ){
+} else if (reg('clear').test(argv2)) {
     main[argv2]()
-}else{
-    console.log(`
-        cmd-todo@1.3.4
-        ------------------------------------------
-        commands:
-        cmd-todo -h -help  show help 
-        cmd-todo get:  show all todos
-        cmd-todo add xxx: add new item set content xxx
-        cmd-todo done xxx: modify item id=xxx done
-        cmd-todo undone xxx: modify item id=xxx undone
-        cmd-todo del xxx: delete item id=xxx
-        cmd-todo clear: delete all todos
-    `.magenta)
 }

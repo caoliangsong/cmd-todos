@@ -1,6 +1,6 @@
 {
   "name": "cmd-todo",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "a todo list in command line",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/caoliangsong/cmd-todos.git"
   },
-  "keywords": ["cmd", "todo"],
+  "keywords": [
+    "cmd",
+    "todo",
+    "command todo",
+    "leancloud"
+  ],
   "author": "seeking",
   "license": "ISC",
   "bugs": {
@@ -21,6 +26,9 @@
   },
   "homepage": "https://github.com/caoliangsong/cmd-todos#readme",
   "dependencies": {
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "leancloud-storage": "^4.8.0",
+    "node-fetch": "^2.6.1",
+    "ora": "^5.1.0"
   }
 }

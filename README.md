@@ -1,4 +1,4 @@
-# cmd-todos
+# cmd-todo
 a todo list in command line 
 
 # Install
@@ -7,15 +7,10 @@ npm install cmd-todo -g
 ```
 
 # How to use
-
-## Work at nodejs
-
-```
-var todo = require('cmd-todo')
-todo.get()
-
-```
+cmd-todo -h
 ## Work at command line
+
+### When first use, auto register new user
 
 ```
 cmd-todo get 
