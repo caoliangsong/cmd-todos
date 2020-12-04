@@ -18,7 +18,7 @@ cmd-todo -h
 ```
 cmd-todo get 
 ```
-get all list
+get all list or register new user
 
 ```
 cmd-todo get done
