@@ -17,16 +17,18 @@ var accoutFile = path.resolve(__dirname, '../src/account.json')
 // 欢迎界面
 if (!argv2 || reg('-h').test(argv2) || reg('-help').test(argv2)) {
     return console.log(`
-    cmd-todo@1.4.0(支持网络账号同步)
+    cmd-todo@1.5.0(支持网络账号同步)
     ------------------------------------------
     Commands:
     cmd-todo -h -help  显示帮助
+    cmd-todo login:  用户登录
+    cmd-todo logout:  用户退出
     cmd-todo get:  显示所有代办任务
     cmd-todo add xxx: 添加代办
     cmd-todo done xxx: 完成代办
     cmd-todo undone xxx: 取消完成
     cmd-todo del xxx: 删除单个
-    cmd-todo clear: 删除所有数据
+    cmd-todo clear: 删除所有（待开发）
 `.magenta)
 }
 
@@ -35,13 +37,65 @@ if (!argv2 || reg('-h').test(argv2) || reg('-help').test(argv2)) {
 var accout = fs.readFileSync(accoutFile, { encoding: 'utf-8' })
 accout = JSON.parse(accout || '{}');
 
+
+// 初始化输入输出流
+const r1 = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+r1.on('close', function () {
+    process.exit(0);
+})
+
+// 处理登录
+if (argv2 == 'login') {
+    r1.question('请输入手机号：', function (answer) {
+        if (!answer) {
+            console.log('手机号不能为空！！')
+            r1.close()
+        }
+
+
+        // 新用户注册
+        r1.question('请输入密码：', function (password) {
+            if (!password) {
+                console.log('密码不能为空！！')
+                r1.close()
+            }
+
+            // 完成输入，存入数据库
+            main.login(answer, password).then(res2 => {
+                if (res2 == 1) {
+                    fs.writeFileSync(accoutFile, JSON.stringify({
+                        username: answer,
+                        password: password
+                    }))
+                    r1.close()
+                }
+                r1.close()
+
+            })
+        })
+    })
+
+    return
+}
+
+// 处理退出
+if (argv2 == 'logout') {
+    fs.writeFileSync(accoutFile, JSON.stringify({
+        username: '',
+        password: ''
+    }))
+    console.log('退出成功！'.green.inverse)
+    return process.exit(0)
+}
+
+// 处理新用户
 if (!accout.username) {
 
-    console.log('>您是cmd-todo的新用户，请先注册账号。'.red)
-    const r1 = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    })
+    console.log('>您是cmd-todo的新用户，请先注册账号。如果已经注册，请运行cmd-todo login'.red)
 
     r1.question('请输入手机号：', function (answer) {
         if (!answer) {
@@ -75,10 +129,6 @@ if (!accout.username) {
                 })
             })
         })
-    })
-
-    r1.on('close', function () {
-        process.exit(0);
     })
     return
 }

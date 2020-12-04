@@ -202,6 +202,23 @@ var CmdTodos = {
         return promise;
     },
 
+    login: function (mobile, password) {
+        const userQuery = new AV.Query('MyUser');
+        userQuery.equalTo('mobile', mobile);
+        userQuery.equalTo('password', password);
+        const promise = new Promise((resolve, reject) => {
+            userQuery.find().then((todos) => {
+                if (todos && todos.length > 0) {
+                    console.log('>登录成功!'.green)
+                    return resolve(todos.length)
+                }
+                console.log('>登录失败!用户名或密码错误！'.red.inverse)
+                resolve(0)
+            }).catch(err => reject(err))
+        })
+        return promise;
+    },
+
     registerUser: function (mobile, password) {
         spinners.start()
         const myUser = new MyUser();
