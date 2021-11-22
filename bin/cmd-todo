@@ -18,10 +18,11 @@ var accoutFile = path.resolve(__dirname, "../src/account.json");
 if (!argv2 || reg("-h").test(argv2) || reg("-help").test(argv2)) {
   return console.log(
     `
-    cmd-todo@1.5.0(支持网络账号同步)
+    cmd-todo@1.6.2(支持网络账号同步)
     ------------------------------------------
     Commands:
     cmd-todo -h -help  显示帮助
+    cmd-todo reg:  用户注册
     cmd-todo login:  用户登录
     cmd-todo logout:  用户退出
     cmd-todo get:  显示所有代办任务
@@ -49,10 +50,9 @@ r1.on("close", function () {
 });
 
 // 处理新用户
-if (!accout.username) {
-  debugger;
+if (argv2 == "reg") {
   console.log(
-    ">您是cmd-todo的新用户，请先注册账号。如果已经注册，请运行cmd-todo login"
+    ">欢迎cmd-todo的新用户，请先注册账号。如果已经注册，请运行cmd-todo login"
       .red
   );
 
