@@ -75,14 +75,14 @@ var CmdTodos = {
             todoData.forEach(function (item, index) {
                 var len = byteLength(item.attributes.content)
                 len = index < 9 ? len - 1 : len
-                console.log(`${index + 1}:${item.attributes.content}${' '.repeat(MAX_LENGTH - len)}(${formatDate(item.createdAt)})`.red.underline)
+                console.log(`${index + 1}:${item.attributes.content}${' '.repeat(MAX_LENGTH - len)}${formatDate(item.createdAt)}`.red)
             })
 
             console.log(`cmd-todo:已办项目 >>>${doneData.length}条                `.grey.inverse)
             doneData.forEach(function (item, index) {
                 var len = byteLength(item.attributes.content)
                 len = index < 9 ? len - 1 : len
-                console.log(`${index + 1}: ${item.attributes.content}${' '.repeat(MAX_LENGTH - len)}(${formatDate(item.createdAt)})`.gray.underline)
+                console.log(`${index + 1}: ${item.attributes.content}${' '.repeat(MAX_LENGTH - len)}${formatDate(item.createdAt)}`.gray)
             })
         })
 

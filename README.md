@@ -21,13 +21,6 @@ cmd-todo get
 get all list or register new user
 
 ```
-cmd-todo get done
-```
-get done list
-```
-cmd-todo get undone
-```
-get undone list
 
 ```
 cmd-todo add xxx 
